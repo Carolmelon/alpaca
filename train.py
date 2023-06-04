@@ -211,6 +211,10 @@ def train():
         model=model,
     )
 
+    from log_gpu_stat import record_gpu_mem,record_system_mem
+    record_gpu_mem(training_args.output_dir)
+    record_system_mem(training_args.output_dir)
+
     data_module = make_supervised_data_module(tokenizer=tokenizer, data_args=data_args)
     trainer = Trainer(model=model, tokenizer=tokenizer, args=training_args, **data_module)
     trainer.train()
